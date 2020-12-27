@@ -11,6 +11,10 @@
 |
 */
 
-Route::prefix('clicks')->group(function() {
-    Route::get('/', 'ClicksController@index');
-});
+Route::resource('/clicks', 'ClicksController', [ 'only' => ['index']]);
+
+Route::resource('/bad-domains', 'BadDomainsController', [
+    'only' => ['index', 'store']
+]);
+
+Route::get('/click', 'ClickController@index');
