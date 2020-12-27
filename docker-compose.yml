@@ -9,7 +9,7 @@ services:
       environment:
         - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
         - MYSQL_DATABASE=${DB_DATABASE}
-        - MYSQL_USER=${DB_USER}
+        - MYSQL_USER=${DB_USERNAME}
         - MYSQL_PASSWORD=${DB_PASSWORD}
       ports:
         - "3306:3306"
@@ -17,16 +17,35 @@ services:
     webserver:
       image: nginx:alpine
       working_dir: /application
+      depends_on:
+        - app
+        - mariadb
       volumes:
           - ./code:/application
-          - ./phpdocker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+          - ./phpdocker/nginx/:/etc/nginx/conf.d/
+      restart: always
       ports:
        - "80:80"
 
     app:
       build: phpdocker/php-fpm
       working_dir: /application
+      env_file:
+        - .env
+      depends_on:
+        - mariadb
+        - composer
       volumes:
         - ./code:/application
         - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini
 
+    composer:
+      image: composer/composer
+      working_dir: /application
+      volumes:
+      - ./code:/application
+      command: bash -c "
+        composer install
+        && composer run-script post-root-package-install
+        && composer run-script post-create-project-cmd
+        "
