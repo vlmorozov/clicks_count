@@ -1,0 +1,13 @@
+{
+    "name": "Clicks",
+    "alias": "clicks",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Clicks\\Providers\\ClicksServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
