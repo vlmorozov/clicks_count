@@ -26,24 +26,23 @@ class ClicksController extends Controller
         ];
 
         $builder = Click::query()
-        ->when($request->input('search.value'), function ($query, $searchValue) {
-            return $query
-                ->where('id', 'like', '%' . $searchValue . '%')
-                ->orWhere('ua', 'like', '%' . $searchValue . '%')
-                ->orWhere('ip', 'like', '%' . $searchValue . '%')
-                ->orWhere('ref', 'like', '%' . $searchValue . '%')
-                ->orWhere('param1', 'like', '%' . $searchValue . '%')
-                ->orWhere('param2', 'like', '%' . $searchValue . '%')
-                ;
-        });
+            ->when($request->input('search.value'), function ($query, $searchValue) {
+                return $query
+                    ->where('id', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ua', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ip', 'like', '%' . $searchValue . '%')
+                    ->orWhere('ref', 'like', '%' . $searchValue . '%')
+                    ->orWhere('param1', 'like', '%' . $searchValue . '%')
+                    ->orWhere('param2', 'like', '%' . $searchValue . '%');
+            });
 
         $recordsTotal = Click::all()->count();
         $recordsFiltered = $builder->count();
 
         $clicks = $builder->orderBy($searchColumns[$request->input('order.0.column')] ?? 'id', $request->input('order.0.dir'))
-        ->offset($request->get('start'))
-        ->limit($request->get('length'))
-        ->get();
+            ->offset($request->get('start'))
+            ->limit($request->get('length'))
+            ->get();
 
 
         return response()->json([
