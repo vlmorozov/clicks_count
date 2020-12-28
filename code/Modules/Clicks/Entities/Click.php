@@ -22,15 +22,18 @@ class Click extends Model
     public $timestamps = false;
 
 
-    protected $casts = [
-        'id' => Click::class.':castId'
-    ];
-
+    public function getIdAttribute()
+    {
+        if (!empty($this->attributes['id'])) {
+            return $this->attributes['id'];
+        }
+        return sha1("{$this->ua}:{$this->ip}:{$this->ref}:{$this->param1}");
+    }
 
     public function save(array $options = [])
     {
         if (empty($this->attributes['id'])) {
-            $this->attributes['id'] = sha1("{$this->ua}:{$this->ip}:{$this->ref}:{$this->param1}");
+            $this->attributes['id'] = $this->id;
         }
         return parent::save($options);
     }

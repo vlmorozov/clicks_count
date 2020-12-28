@@ -16,7 +16,6 @@
     </head>
     <body>
     <div class="">
-
         <div>
             <table id="clicks">
                 <thead>
@@ -66,10 +65,11 @@
                 ]
             });
             let tableClicks = $('#clicks').DataTable({
+                processing: true,
                 serverSide: true,
                 ajax: {
                     url: '/clicks',
-                    dataSrc: ''
+                    dataSrc: 'data'
                 },
                 columns: [
                     { "data": "id"},

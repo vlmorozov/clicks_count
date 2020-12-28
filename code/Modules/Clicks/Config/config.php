@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'name' => 'Clicks'
+    'name' => 'Clicks',
+    'redirect_url' => 'http://google.com'
 ];

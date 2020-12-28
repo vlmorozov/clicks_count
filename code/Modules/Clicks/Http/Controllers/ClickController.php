@@ -25,22 +25,31 @@ class ClickController extends Controller
             'param2' => $request->get('param2'),
         ];
 
-        $click = Click::where('ua', $data['ua'])
-            ->where('ip', $data['ip'])
-            ->where('ref', $data['ref'])
-            ->where('param1', $data['param1'])
-            ->first();
+        $preClick = new Click($data);
 
-        if ($click) {
-            $click->increment('error');
-            $click->save();
+        $clickInDb = Click::where('id', $preClick->id)->first();
+
+        $hasError = false;
+
+        if (BadDomain::where(['name' => $data['ref']])->first()) {
+            $data['bad_domain'] = 1;
+            $hasError = true;
+        }
+
+        if ($clickInDb) {
+            $clickInDb->increment('error');
+            $clickInDb->save();
+            $hasError = true;
         } else {
-            $click = new Click();
-            if (BadDomain::where(['name' => $data['ref']])->first()) {
-                $data['error'] = 1;
-            }
-            $click->fill($data);
-            $click->save();
+            $clickInDb = new Click();
+            $clickInDb->fill($data);
+            $clickInDb->save();
+        }
+
+        if ($hasError) {
+            return redirect(route('error', ['idClick' => $clickInDb->id]))->withErrors('Click was processed already!');
+        } else {
+            return redirect(route('success', ['idClick' => $clickInDb->id]))->with('status', 'Click success!');
         }
     }
 
