@@ -17,6 +17,7 @@
     <body>
     <div class="">
         <div>
+            <h3>Clicks</h3>
             <table id="clicks">
                 <thead>
                 <tr>
@@ -36,9 +37,11 @@
             </table>
         </div>
 
-
+        <hr>
+        <h3>Bad domains</h3>
         <div>
             <div>
+                <label>Add bad domain</label>
                 <input type="text" maxlength="255" id="new-domain" />
                 <button id="add-new-domain">add</button>
             </div>
