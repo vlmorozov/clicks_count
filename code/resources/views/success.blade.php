@@ -14,6 +14,8 @@
             <dt>User-agent</dt><dd>{{$click->ua}}</dd>
             <dt>IP</dt><dd>{{$click->ip}}</dd>
             <dt>Ref</dt><dd>{{$click->ref}}</dd>
+            <dt>Param1</dt><dd>{{$click->param1}}</dd>
+            <dt>Param2</dt><dd>{{$click->param2}}</dd>
         </dl>
     </body>
 </html>
