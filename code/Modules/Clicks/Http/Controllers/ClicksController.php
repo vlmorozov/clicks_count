@@ -23,6 +23,8 @@ class ClicksController extends Controller
             3 => 'ref',
             4 => 'param1',
             5 => 'param2',
+            6 => 'error',
+            7 => 'bad_domain',
         ];
 
         $builder = Click::query()
