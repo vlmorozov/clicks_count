@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Clicks\Entities\BadDomain;
+use Modules\Clicks\Http\Requests\BadDomainRequest;
 
 class BadDomainsController extends Controller
 {
@@ -17,7 +18,7 @@ class BadDomainsController extends Controller
         return response()->json($domains->toArray());
     }
 
-    public function store(Request $request)
+    public function store(BadDomainRequest $request)
     {
         $domainName = $request->post('domain');
 
