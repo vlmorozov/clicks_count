@@ -3,8 +3,16 @@
 ###Время выполения 3 дня
 
 
+###Установка проекта
+
+1. `cp .env.dafualt .env`
+2. В файле `.env` прописать параметры подключения к БД
+3. Поднять контейнеры `docker-compose up -d`
+4. запустить миграции `docker-compose exec app php artisan migrate`
+
 ###Запуск роекта
-docker-compose up -d
+
+`docker-compose up -d`
 
 ###Требования:
 1. Реализовать задание на Laravel framework’е.
